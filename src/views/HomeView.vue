@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn @click="helloworld()">안녕하세요</v-btn>
+    <v-btn @click="helloworld()">안녕하세요 하재승 교수님입니다</v-btn>
     
     <div v-for="student in studentFilter()" class="student" 
     :class="{old:student.age>=40}">
