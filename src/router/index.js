@@ -12,15 +12,15 @@ const routes = [
     component: HomeView
   },
   {
-    path:"/board",
+    path: "/board",
     component: BoardList
   },
   {
-    path:"/board/write",
+    path: "/board/write",
     component: BoardWrite
   },
   {
-    path:"/board/item/:id",
+    path: "/board/item/:id",
     component: BoardItem
   }
 ]

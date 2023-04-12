@@ -10,7 +10,7 @@
             </tr>
 
             <tbody>
-                <tr v-for="(board,key) in boardList" :key="key" @click="moveItem(board)">
+                <tr v-for="(board, key) in boardList" :key="key" @click="moveItem(board)">
                     <td class="text-center">{{ board.boardNo }}</td>
                     <td>{{ board.title }}</td>
                     <td class="text-center">{{ board.writer }}</td>
@@ -27,56 +27,50 @@
     </v-container>
 </template>
 <script>
-export default{
-    data(){
-        return{
-            boardList:[
-                {boardNo:1,title:"제목1",writer:"진용화",
-                viewCount:1,writeDate:"2021-07-01"},
-                {boardNo:2,title:"제목1",writer:"진용화",
-                viewCount:1,writeDate:"2021-07-01"},
-                {boardNo:3,title:"제목1",writer:"진용화",
-                viewCount:1,writeDate:"2021-07-01"},
-                {boardNo:4,title:"제목1",writer:"진용화",
-                viewCount:1,writeDate:"2021-07-01"},
-                {boardNo:5,title:"제목1",writer:"진용화",
-                viewCount:1,writeDate:"2021-07-01"},
-                {boardNo:6,title:"제목1",writer:"진용화",
-                viewCount:1,writeDate:"2021-07-01"},
-                {boardNo:7,title:"제목1",writer:"진용화",
-                viewCount:1,writeDate:"2021-07-01"},
-                {boardNo:8,title:"제목1",writer:"진용화",
-                viewCount:1,writeDate:"2021-07-01"},
-                {boardNo:9,title:"제목1",writer:"진용화",
-                viewCount:1,writeDate:"2021-07-01"},
-            ]
+export default {
+    data() {
+        return {
+            boardList: []
         }
     },
-    methods:{
-        moveWrite(){
+    mounted() {
+        this.getBoardList()
+    },
+    methods: {
+        getBoardList() {
+            this.$axios.get("/api/board/list")
+                .then(result => {
+                    console.log(result.data)
+                    this.boardList = result.data
+                })
+        },
+        moveWrite() {
             this.$router.push("/board/write")
         },
-        moveItem(board){
-            this.$router.push("/board/item/"+board.boardNo)
+        moveItem(board) {
+            this.$router.push("/board/item/" + board.boardNo)
         }
     }
 }
 </script>
 
 <style>
-    table{
-        width:100%;
-        border-collapse:collapse;
-    }
-    table tr th{
-        border-bottom:1px solid #999;
-    }
-    table tr td{
-        border-bottom:1px solid #ccc;
-        padding:5px 0;
-    }
-    table tbody tr:hover{
-        cursor:pointer;
-        background-color:#eee;
-    }
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table tr th {
+    border-bottom: 1px solid #999;
+}
+
+table tr td {
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0;
+}
+
+table tbody tr:hover {
+    cursor: pointer;
+    background-color: #eee;
+}
 </style>
