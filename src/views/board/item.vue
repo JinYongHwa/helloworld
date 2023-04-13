@@ -25,7 +25,10 @@ export default {
     },
     methods: {
         nl2br(input) {
-            return input.replace(/\n/g, "<br/>")
+            if (input) {
+                return input.replace(/\n/g, "<br/>")
+            }
+
         }
     }
 }
