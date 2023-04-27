@@ -28,6 +28,24 @@ function init(Sequlize, connection) {
         }
     })
 
+    global.User = connection.define("user", {
+        id: {
+            type: Sequlize.STRING,
+            primaryKey: true,
+        },
+        password: {
+            type: Sequlize.STRING,
+        },
+        name: {
+            type: Sequlize.STRING,
+        },
+        joinDate: {
+            type: Sequlize.DATE,
+            defaultValue: Sequlize.NOW,
+        }
+    })
+
+
     connection.sync({
         alter: true
     })

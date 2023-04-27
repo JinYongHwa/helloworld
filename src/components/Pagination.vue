@@ -25,6 +25,11 @@ export default {
         }
 
     },
+    watch: {
+        data() {
+            this.init()
+        }
+    },
     mounted() {
         this.init()
     },

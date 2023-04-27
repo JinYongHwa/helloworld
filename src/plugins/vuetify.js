@@ -6,12 +6,12 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 
 export default createVuetify({
-  theme:{
-    themes:{
-      light:{
-        dark:false,
-        colors:{
-          primary:"#ff0000"
+  theme: {
+    themes: {
+      light: {
+        dark: false,
+        colors: {
+          primary: "#00ffff"
         }
       }
     }

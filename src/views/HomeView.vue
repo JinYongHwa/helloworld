@@ -1,9 +1,13 @@
 <template>
   <div>
-    <v-btn @click="helloworld()">안녕하세요 진용화입니다</v-btn>
-    <div v-for="student in studentFilter()" class="student" :class="{ old: student.age >= 40 }">
-      {{ student.name }}
-    </div>
+    <v-container>
+      <v-text-field v-model="user.id" label="아이디"></v-text-field>
+      <v-text-field v-model="user.password" label="비밀번호"></v-text-field>
+      <div class="text-center">
+        <v-btn class="mr-2">로그인</v-btn>
+        <v-btn @click="moveJoin">회원가입</v-btn>
+      </div>
+    </v-container>
   </div>
 </template>
 
@@ -14,38 +18,15 @@ export default defineComponent({
   name: 'HomeView',
   data() {
     return {
-      onoff: true,
-      students: [
-        { name: "김보미", age: 20 },
-        { name: "김세민", age: 40 },
-        { name: "김혜현", age: 40 },
-        { name: "나호윤", age: 50 }
-
-      ]
+      user: {
+        id: '',
+        password: ''
+      }
     }
   },
   methods: {
-    helloworld() {
-      this.$router.push("/helloworld")
-    },
-    studentFilter() {
-      var returnArr = []
-      //전체학생이 반환되도록함
-      if (this.onoff == true) {
-        this.students.forEach(student => {
-          returnArr.push(student)
-        })
-      }
-      //학생의 나이가 40 미만인 학생만 반환되도록
-      else {
-        this.students.forEach(student => {
-          if (student.age < 40) {
-            returnArr.push(student)
-          }
-        })
-      }
-      return returnArr;
-
+    moveJoin() {
+      this.$router.push("/join")
     }
   }
 });

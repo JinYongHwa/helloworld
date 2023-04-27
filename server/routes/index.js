@@ -4,7 +4,7 @@ const Service = require("./service");
 const Pager = require("node-jyh-pager")
 let pager = new Pager({
   itemPerPage: 10,
-  pageCount: 10
+  pageCount: 5
 })
 
 /* GET home page. */
@@ -21,7 +21,7 @@ router.post("/board/list", async function (req, res) {
   var list = await Board.findAll({
     offset: (page - 1) * 10,
     limit: 10,
-    order: [["writeDate", "DESC"], ["viewCount", "ASC"]]
+    order: [["writeDate", "DESC"], ["boardNo", "desc"]]
   })
   var totalCount = await Board.count()
   var pagination = pager.getBottomNav(page, totalCount)
@@ -66,9 +66,56 @@ router.post("/board/item", async function (req, res) {
       boardNo: boardNo
     }
   })
+  boardItem.viewCount++
+  await boardItem.save()
+
   res.json({
     result: "ok",
     board: boardItem
+  })
+})
+
+router.post("/board/modify", async function (req, res) {
+  console.log(req.body)
+
+  if (req.body.title == "") {
+    res.json({
+      result: "fail",
+      message: "제목을 입력하세요"
+    })
+    return
+  }
+  if (req.body.body == "") {
+    res.json({
+      result: "fail",
+      message: "글내용을 입력하세요"
+    })
+    return
+  }
+  await Board.update({
+    title: req.body.title,
+    body: req.body.body
+  }, {
+    where: {
+      boardNo: req.body.boardNo
+    }
+  })
+
+  res.json({
+    result: "ok"
+  })
+})
+
+
+router.post("/board/remove", async function (req, res) {
+  console.log(req.body)
+  await Board.destroy({
+    where: {
+      boardNo: req.body.boardNo
+    }
+  })
+  res.json({
+    result: "ok"
   })
 })
 
