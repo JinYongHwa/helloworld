@@ -7,7 +7,7 @@
       <v-text-field type="password" v-model="user.passwordConfirm" label="비밀번호 확인"></v-text-field>
       <div class="text-center">
         <v-btn class="mr-2" @click="join">회원가입</v-btn>
-        <v-btn>취소</v-btn>
+        <v-btn @click="$router.push('/')">취소</v-btn>
       </div>
     </v-container>
   </div>
@@ -42,6 +42,15 @@ export default defineComponent({
         return
       }
       this.$axios.post("/api/user/join", this.user)
+        .then(result => {
+          if (result.data.result == "ok") {
+            alert("회원가입이 완료되었습니다.")
+            this.$router.push("/")
+          }
+          else {
+            alert(result.data.message)
+          }
+        })
     }
   }
 });

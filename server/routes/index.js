@@ -19,11 +19,26 @@ router.post("/board/list", async function (req, res) {
   var page = req.body.page
   console.log(page)
   var list = await Board.findAll({
+    include: {
+      model: User,
+      as: "user",
+      attributes: {
+        exclude: ["password"]
+      },
+      required: true
+    },
     offset: (page - 1) * 10,
     limit: 10,
     order: [["writeDate", "DESC"], ["boardNo", "desc"]]
   })
-  var totalCount = await Board.count()
+  console.log(list)
+  var totalCount = await Board.count({
+    include: {
+      model: User,
+      as: "user",
+      required: true
+    }
+  })
   var pagination = pager.getBottomNav(page, totalCount)
 
 
@@ -44,7 +59,16 @@ router.post("/board/write", async function (req, res) {
     })
     return
   }
-
+  if (!req.session.user) {
+    res.json({
+      result: "fail",
+      message: "로그인이 필요합니다"
+    })
+    return
+  }
+  //로그인된 경우에만 실행
+  req.body.userId = req.session.user.id
+  console.log(req.body)
 
   //todo : 디비에 저장
   var result = await Board.create(req.body)

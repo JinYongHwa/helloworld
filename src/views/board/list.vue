@@ -13,7 +13,11 @@
                 <tr v-for="(board, key) in boardList" :key="key" @click="moveItem(board)">
                     <td class="text-center">{{ board.boardNo }}</td>
                     <td>{{ board.title }}</td>
-                    <td class="text-center">{{ board.writer }}</td>
+                    <td class="text-center">
+                        <div v-if="board.user">
+                            {{ board.user.name }}
+                        </div>
+                    </td>
                     <td class="text-center">{{ board.viewCount }}</td>
                     <td class="text-center">{{ dateFormat(board.writeDate) }}</td>
                 </tr>

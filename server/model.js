@@ -44,6 +44,15 @@ function init(Sequlize, connection) {
             defaultValue: Sequlize.NOW,
         }
     })
+    Board.belongsTo(User, {
+        as: "user",
+        foreignKey: "userId"
+    })
+    User.hasMany(Board, {
+        as: "boards",
+        foreignKey: "userId"
+    })
+
 
 
     connection.sync({
